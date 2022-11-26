@@ -1,7 +1,9 @@
 # car-price-prediction
 Implementing CRISP-DM methodolgy for predicting car price
 
-install all requirements from req.txt
+# Notebook
+this the notebook that has been created:
+https://github.com/helmiagng/car-price-prediction/blob/main/car-price-prediction.ipynb
 
 # Table and graph result on rach regression model
 
