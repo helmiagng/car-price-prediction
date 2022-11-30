@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Car Price Predictor</h1>
+<p>Enter your car speficiation here so we can predict the price of your car<p>
+<form action="." method="POST">{% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="predict">
+    <p>Your car price is :${{pred_price}}</p>
+</form>
+{% endblock %}
