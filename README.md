@@ -23,3 +23,6 @@ https://github.com/helmiagng/car-price-prediction/blob/main/car_price_predictor_
 
 ![rmse_score_car_pred](https://user-images.githubusercontent.com/68595414/228919069-90ed335e-2ed4-4a1c-9d26-758d4c47ae5b.png)
 
+![mae_score_car_pred](https://user-images.githubusercontent.com/68595414/228919251-1d390a5f-59b2-4db0-85ff-51ef004aa92e.png)
+
+![r2_score](https://user-images.githubusercontent.com/68595414/228919268-ebb1f754-1b84-420f-8914-c3b7c14f573f.png)
