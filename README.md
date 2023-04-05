@@ -16,6 +16,8 @@ https://github.com/helmiagng/car-price-prediction/blob/main/scaler_car_predictio
 #saved best ml model
 https://github.com/helmiagng/car-price-prediction/blob/main/car_price_predictor_best_model.sav
 
+# Deployment car price prediction with gradio
+![image](https://user-images.githubusercontent.com/68595414/230172419-596e2bb0-4c17-4869-a5bd-46ac0fb7f7b2.png)
 
 # Table and graph result on rach regression model
 
@@ -27,5 +29,4 @@ https://github.com/helmiagng/car-price-prediction/blob/main/car_price_predictor_
 
 ![r2_score](https://user-images.githubusercontent.com/68595414/228919268-ebb1f754-1b84-420f-8914-c3b7c14f573f.png)
 
-# Deployment car price prediction with gradio
-![image](https://user-images.githubusercontent.com/68595414/230172419-596e2bb0-4c17-4869-a5bd-46ac0fb7f7b2.png)
+
