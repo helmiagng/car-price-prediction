@@ -1,0 +1,168 @@
+#library buat interface di web
+import gradio as gr
+#library buat ngolah data
+import pandas as pd
+#buat loading model machine learning
+import pickle
+
+
+
+def data_preprocessing(data):
+    new_data_col = ['fueltype', 'aspiration', 'doornumber', 'carbody', 'drivewheel', 'enginelocation',
+                'wheelbase', 'carlength', 'carwidth', 'carheight', 'curbweight', 'enginetype',
+                 'cylindernumber', 'enginesize', 'fuelsystem', 
+                'boreratio', 'stroke','compressionratio','horsepower', 'citympg', 'highwaympg','peakrpm']
+    data=pd.DataFrame(data,columns=new_data_col)
+    ohe_filename='C:/project/predict_car_price/src/ml_model/ohe_car_prediction.sav'
+    scaler_filename='C:/project/predict_car_price/src/ml_model/scaler_car_prediction.sav'
+    ohe_model=pickle.load(open(ohe_filename,'rb'))
+    scaler_model=pickle.load(open(scaler_filename,'rb'))
+    cat_col=['fueltype','aspiration','carbody','drivewheel','enginelocation','enginetype',
+                'fuelsystem']
+    ohe_df=pd.DataFrame(ohe_model.transform(data[cat_col]).toarray())
+    data=data.join(ohe_df)
+    data.drop(columns=cat_col,inplace=True)
+
+    if data['wheelbase'][0] < 95.7:
+        data['wheelbase'] = 1
+        
+    elif data['wheelbase'][0]> 95.7 and data['wheelbase'][0] < 99.367:
+        data['wheelbase'] = 2
+    else:
+        data['wheelbase'] = 3
+
+    if  data['stroke'][0] < 3.153:
+        data['stroke'] = 1
+        
+    elif data['stroke'][0]> 3.153 and data['stroke'][0] < 3.39:
+        data['stroke'] = 2
+    else:
+        data['stroke'] = 3
+        
+        
+    if  data['horsepower'][0] < 69.0:
+        data['horsepower'] = 1
+        
+    elif data['horsepower'][0]> 69.0 and data['horsepower'][0] < 97.0:
+        data['horsepower'] = 2
+        
+    elif data['horsepower'][0]> 97.0 and data['horsepower'][0] < 123.0:
+        data['horsepower']= 3
+        
+    else:
+        data['horsepower'] = 4
+
+    data['citympg'] = data['citympg']//10
+
+    data=scaler_model.transform(data)
+    return data
+
+    
+def predict_price(fueltype, aspiration, doornumber, carbody, drivewheel, enginelocation, wheelbase, carlength, carwidth, 
+                carheight, curbweight, enginetype, cylindernumber, enginesize, fuelsystem, boreratio,stroke,compression_ratio,
+                 horsepower, peakrpm,citympg, highwaympg): 
+    model_ml_filename='C:/project/predict_car_price/src/ml_model/car_price_predictor_best_model.sav'
+    model_ml_load=pickle.load(open(model_ml_filename,'rb'))
+    new_data = [[fueltype, asp[aspiration], doornumber, carbody, drivewheel, enginelocation.lower(),
+                wheelbase, carlength, carwidth, carheight, curbweight, enginetype, cylindernumber, enginesize, fuelsystem, 
+                boreratio, stroke,compression_ratio,horsepower, peakrpm, citympg, highwaympg]]
+    new_data=data_preprocessing(new_data)
+    pred_price=model_ml_load.predict(new_data)
+    pred_price='$'+str(pred_price[0])
+    return pred_price
+
+asp = {
+    'Standard':'std',
+   'Turbo':'turbo'
+}
+
+carName_list=['Alfa-romero', 'Audi', 'BMW', 'Chevrolet', 'Dodge', 'Honda',
+       'Isuzu', 'Jaguar', 'Mazda', 'Buick', 'Mercury',
+       'Mitsubishi', 'Nissan', 'Peugeot', 'Plymouth', 'Porsche',
+       'Renault', 'Saab', 'Subaru', 'Toyota',
+        'Volkswagen', 'VW', 'Volvo']
+fuelsystem_list=['mpfi', '2bbl', 'mfi', '1bbl', 'spfi', '4bbl', 'idi', 'spdi']
+
+fuelType_list=['gas','diesel']
+
+carBody_list=['convertible', 'hatchback', 'sedan', 'wagon', 'hardtop']
+
+engineType_list=['dohc', 'ohcv', 'ohc', 'l', 'rotor', 'ohcf', 'dohcv']
+
+car = gr.Dropdown(label = "Car brand", choices=carName_list)
+
+fueltype = gr.Radio(label = "Fuel Type", choices = fuelType_list)
+
+aspiration = gr.Radio(label = "Aspiration type", choices = ["Standard", "Turbo"])
+
+doornumber = gr.Radio(label = "Number of doors", choices = [2, 4])
+
+carbody = gr.Dropdown(label ="Car body type", choices = carBody_list)
+
+drivewheel = gr.Radio(label = "Drive wheel", choices = ['rwd', 'fwd', '4wd'])
+
+enginelocation = gr.Radio(label = "Engine location", choices = ['Front', 'Rear'])
+
+wheelbase = gr.Slider(label = "Distance between the wheels on the side of the car (in inches)", minimum = 50, maximum = 300)
+
+carlength = gr.Slider(label = "Length of the car (in inches)", minimum = 50, maximum = 300)
+
+carwidth = gr.Slider(label = "Width of the car (in inches)", minimum = 50, maximum = 300)
+
+carheight = gr.Slider(label = "Height of the car (in inches)", minimum = 50, maximum = 300)
+
+curbweight = gr.Slider(label = "Weight of the car (in pounds)", minimum = 500, maximum = 6000)
+
+enginetype = gr.Dropdown(label = "Engine type", choices = engineType_list)
+
+cylindernumber = gr.Radio(label = "Cylinder number", choices = [2, 3, 4, 5, 6, 8, 12])
+
+enginesize = gr.Slider(label = "Engine size (swept volume of all the pistons inside the cylinders)", minimum = 50, maximum = 500)
+
+fuelsystem = gr.Dropdown(label = "Fuel system (link to ressource: ", choices = fuelsystem_list)
+
+boreratio = gr.Slider(label = "Bore ratio (ratio between cylinder bore diameter and piston stroke)", minimum = 1, maximum = 6)
+
+stroke = gr.Slider(label='Stroke',minimum=2,maximum=4)
+
+compression_ratio = gr.Slider(label='Compression Ratio',minimum=2,maximum=40)
+
+horsepower = gr.Slider(label = "Horse power of the car", minimum = 25, maximum = 400)
+
+peakrpm = gr.Slider(label="Your car Peak RPM", minimum=0,maximum=20000)
+
+citympg = gr.Slider(label = "Mileage in city (in km)", minimum = 0, maximum = 100)
+
+highwaympg = gr.Slider(label = "Mileage on highway (in km)", minimum = 0, maximum = 100)
+
+
+Output = gr.Textbox()
+
+app = gr.Interface(title="Predict the price of a car based on its specs", 
+                    fn=predict_price,
+                    inputs=[fueltype,
+                            aspiration,
+                            doornumber,
+                            carbody,
+                            drivewheel, 
+                            enginelocation, 
+                            wheelbase,
+                            carlength, 
+                            carwidth, 
+                            carheight, 
+                            curbweight,
+                            enginetype, 
+                            cylindernumber, 
+                            enginesize,
+                            fuelsystem,
+                            boreratio,
+                            stroke,
+                            compression_ratio,
+                            horsepower, 
+                            peakrpm,
+                            citympg, 
+                            highwaympg
+                            ],
+                    outputs=Output)
+
+app.launch()
