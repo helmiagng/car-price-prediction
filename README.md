@@ -5,17 +5,6 @@ Implementing CRISP-DM methodolgy for predicting car price
 this the notebook that has been created:
 https://github.com/helmiagng/car-price-prediction/blob/main/car-price-prediction.ipynb
 
-#Saved model for one hot encoding, scaling and best model for machine learning
-
-#one hot encoding
-https://github.com/helmiagng/car-price-prediction/blob/main/ohe_car_prediction.sav
-
-#scaler 
-https://github.com/helmiagng/car-price-prediction/blob/main/scaler_car_prediction.sav
-
-#saved best ml model
-https://github.com/helmiagng/car-price-prediction/blob/main/car_price_predictor_best_model.sav
-
 # Deployment car price prediction with gradio
 ![image](https://user-images.githubusercontent.com/68595414/230172419-596e2bb0-4c17-4869-a5bd-46ac0fb7f7b2.png)
 
