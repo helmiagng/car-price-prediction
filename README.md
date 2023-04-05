@@ -5,6 +5,8 @@ Implementing CRISP-DM methodolgy for predicting car price
 this the notebook that has been created:
 https://github.com/helmiagng/car-price-prediction/blob/main/car-price-prediction.ipynb
 
+![image](https://user-images.githubusercontent.com/68595414/230178538-b6ef1135-f27f-498e-a827-6a8e0de232b3.png)
+
 # Deployment car price prediction with gradio
 ![image](https://user-images.githubusercontent.com/68595414/230172419-596e2bb0-4c17-4869-a5bd-46ac0fb7f7b2.png)
 
